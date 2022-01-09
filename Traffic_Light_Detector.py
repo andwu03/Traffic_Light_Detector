@@ -28,7 +28,10 @@ btn_upload = widgets.FileUpload()
 VBox([widgets.Label('Select an image to be classified: '), 
       btn_upload, btn_run, out_pl, lbl_pred])
 
+#Code used to train the model
 '''
+key = os.environ.get('AZURE_SEARCH_KEY', "insert your search key here")
+
 light_types = "green", "yellow", "red"
 
 path = Path("traffic_lights")
@@ -61,7 +64,13 @@ dls = traffic_light.dataloaders(path)
 
 learn = cnn_learner(dls, resnet34, metrics=error_rate)
 learn.fine_tune(10)
+#train for 10 epochs
 
 interp = ClassificationInterpretation.from_learner(learn)
 interp.plot_confusion_matrix()
+
+learn.export()
+path = Path()
+path.ls(file_exts=".pkl")
+#file name will be export.pkl, you can then rename it to what you want it to be
 '''
